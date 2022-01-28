@@ -3,6 +3,7 @@
 
 #include "PlayerPawnBase.h"
 #include "Engine/Classes/Camera/CameraComponent.h"
+#include "SnakeBase.h"
 
 // Sets default values
 APlayerPawnBase::APlayerPawnBase()
@@ -19,6 +20,7 @@ APlayerPawnBase::APlayerPawnBase()
 void APlayerPawnBase::BeginPlay()
 {
 	Super::BeginPlay();
+	SetActorRotation(FRotator(-90, 0, 0));
 	
 }
 
@@ -34,5 +36,10 @@ void APlayerPawnBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void APlayerPawnBase::CreateSnakeActor()
+{
+	SnakeActor = GetWorld()->SpawnActor<ASnakeBase>(SnakeActorClass, FTransform());
 }
 

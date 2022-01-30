@@ -28,7 +28,7 @@ void ASnakeBase::BeginPlay()
 void ASnakeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Move(DeltaTime);
+	Move();
 
 }
 
@@ -44,29 +44,28 @@ void ASnakeBase::AddSnakeElement(int ElementsNum)
 	}
 }
 
-void ASnakeBase::Move(float DeltaTime)
+void ASnakeBase::Move()
 {
-	FVector MovementVector;
-	float MovementSpeedDelta = MovementSpeed * DeltaTime;
-	if (LastMoveDirection == EMovementDirection::UP)
-	{
-		switch (LastMoveDirection)
+	FVector MovementVector(ForceInitToZero);
+	float MovementSpeed = ElementSize;
+
+	
+	switch (LastMoveDirection)
 		{
 		case EMovementDirection::UP:
-			MovementVector.X += MovementSpeedDelta;
+			MovementVector.X += ElementSize;
 			break;
 		case EMovementDirection::DOWN:
-			MovementVector.X -= MovementSpeedDelta;
+			MovementVector.X -= ElementSize;
 			break;
 		case EMovementDirection::LEFT:
-			MovementVector.Y += MovementSpeedDelta;
+			MovementVector.Y += ElementSize;
 			break;
 		case EMovementDirection::RIGHT:
-			MovementVector.Y -= MovementSpeedDelta;
+			MovementVector.Y -= ElementSize;
 			break;
 
 		}
-	}
 
 	AddActorWorldOffset(MovementVector);
 }

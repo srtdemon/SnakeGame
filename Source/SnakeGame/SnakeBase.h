@@ -41,7 +41,7 @@ public:
 	TArray<ASnakeElementBase*> SnakeElements;
 
 	UPROPERTY()
-		EMovementDirection LastMoveDirection;
+	EMovementDirection LastMoveDirection;
 	
 protected:
 	// Called when the game starts or when spawned

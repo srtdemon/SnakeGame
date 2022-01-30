@@ -21,7 +21,8 @@ ASnakeBase::ASnakeBase()
 void ASnakeBase::BeginPlay()
 {
 	Super::BeginPlay();
-	AddSnakeElement(4);
+	SetActorTickInterval(MovementSpeed);
+	AddSnakeElement(5);
 }
 
 // Called every frame
@@ -39,7 +40,6 @@ void ASnakeBase::AddSnakeElement(int ElementsNum)
 		FVector NewLocation(SnakeElements.Num() * ElementSize, 0, 0);
 		FTransform NewTransform(NewLocation);
 		ASnakeElementBase* NewSnakeElem = GetWorld()->SpawnActor<ASnakeElementBase>(SnakeElementClass, NewTransform);
-		NewSnakeElem->AttachToActor(this, FAttachmentTransformRules::KeepRelativeTransform);
 		SnakeElements.Add(NewSnakeElem);
 	}
 }
@@ -47,7 +47,7 @@ void ASnakeBase::AddSnakeElement(int ElementsNum)
 void ASnakeBase::Move()
 {
 	FVector MovementVector(ForceInitToZero);
-	float MovementSpeed = ElementSize;
+	MovementSpeed = ElementSize;
 
 	
 	switch (LastMoveDirection)
@@ -64,9 +64,18 @@ void ASnakeBase::Move()
 		case EMovementDirection::RIGHT:
 			MovementVector.Y -= ElementSize;
 			break;
-
 		}
 
-	AddActorWorldOffset(MovementVector);
+	//AddActorWorldOffset(MovementVector);
+
+	for (int i = SnakeElements.Num() - 1; i > 0; i--)
+	{
+		auto CurrentElement = SnakeElements[i];
+		auto PrevElement = SnakeElements[i-1];
+		FVector PrevLocation = PrevElement->GetActorLocation();
+		CurrentElement->SetActorLocation(PrevLocation);
+	}
+
+	SnakeElements[0]-> AddActorWorldOffset(MovementVector);
 }
 

@@ -24,6 +24,7 @@ void APlayerPawnBase::BeginPlay()
 	SetActorRotation(FRotator(-90, 0, 0));
 	CreateSnakeActor();
 	
+	
 }
 
 // Called every frame
@@ -39,7 +40,8 @@ void APlayerPawnBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	PlayerInputComponent->BindAxis("Vertical", this, &APlayerPawnBase::HandlePlayerVerticalInput);
-	PlayerInputComponent->BindAxis("Horizontsal", this, &APlayerPawnBase::HandlePlayerHorizontalInput);
+	PlayerInputComponent->BindAxis("Horizontal", this, &APlayerPawnBase::HandlePlayerHorizontalInput);
+	
 }
 
 void APlayerPawnBase::CreateSnakeActor()
@@ -74,6 +76,7 @@ void APlayerPawnBase::HandlePlayerHorizontalInput(float value)
 		else if (value < 0 && SnakeActor->LastMoveDirection != EMovementDirection::RIGHT)
 		{
 			SnakeActor->LastMoveDirection = EMovementDirection::LEFT;
+
 		}
 	}
 }
